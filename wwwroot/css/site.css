@@ -22,7 +22,30 @@ body {
   background-color: rgb(141, 200, 168);
 }
 
-.logo {
-  width: 10%;
+.home {
+  width: 15%;
   height: auto;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+}
+
+.nav-item {
+  margin-left: 3%;
+}
+
+.buscar {
+  margin-left: 3%;
+}
+
+.sesion {
+  float: right;
+}
+
+.post {
+  width: 100%;
+  height: 70%;
+  background-color: #F5F5F5;
 }
