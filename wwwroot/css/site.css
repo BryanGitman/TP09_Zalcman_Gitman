@@ -15,4 +15,14 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: rgb(158, 213, 236);
+}
+
+.menu {
+  background-color: rgb(141, 200, 168);
+}
+
+.logo {
+  width: 10%;
+  height: auto;
 }
