@@ -32,8 +32,13 @@ img {
   bottom: 0;
 }
 
+.text-muted {
+  margin-left: 2%;
+}
+
 .menu {
   position:fixed;
+  z-index: 1000 !important;
   top: 0;
   width: 100%;
   background-color: rgb(141, 200, 168);
@@ -69,10 +74,36 @@ img {
 }
 
 .circulo {
-  margin: 2%;
-  position: relative;
+  padding: 0px;
   width: 70px;
   height: 70px;
   overflow: hidden;
   border-radius: 50%;
+}
+
+.imgH {
+  width: auto;
+  height: 100%;
+  margin-left: -25%;
+}
+
+.dataPost {
+  margin: 2%;
+}
+
+.user {
+  margin: 2%;
+  margin-bottom: -5%;
+  display: flex;
+}
+
+.estrella {
+  width: 15%;
+  height: auto;
+}
+
+.carousel {
+  margin-left: 1%;
+  width: 98%;
+  height: auto;
 }
