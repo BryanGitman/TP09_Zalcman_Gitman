@@ -73,6 +73,15 @@ img {
   border-radius: 10px;
 }
 
+
+.dest {
+  width: 50%;
+  height: 75px;
+  background-color: #F5F5F5;
+  border-radius: 10px;
+
+}
+
 .circulo {
   padding: 0px;
   width: 70px;
@@ -97,10 +106,24 @@ img {
   display: flex;
 }
 
+.userDest {
+  margin: 1%;
+  margin-bottom: -2%;
+  margin-left: -50%;
+  display: flex;
+}
+
 .estrella {
-  width: 15%;
+  width: 25px;
   height: auto;
 }
+
+.estrellaDest {
+  width: 50%;
+  height: auto;
+ }
+
+
 
 .carousel {
   margin-left: 1%;
