@@ -13,15 +13,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int idDest)
     {
         return View();
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
      public IActionResult Destinos()
     {
         return View();
