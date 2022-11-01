@@ -36,6 +36,12 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult SesionIniciada()
+    {
+        return View("Index");
+    }
+
     public IActionResult AgregarPost(int idUser)
     {
         return View();
