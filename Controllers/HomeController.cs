@@ -13,13 +13,16 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index(int idDest)
+    public IActionResult Index(int idUser, int idDest)
     {
+        ViewBag.destacado = "Home";
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
         return View();
     }
 
      public IActionResult Destinos()
     {
+        ViewBag.destacado = "Destinos";
         return View();
     }
 

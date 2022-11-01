@@ -23,12 +23,30 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><b>Home</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Destinos">Destinos</a>
-                        </li>
+                        @{
+                            if(ViewBag.destacado == "Home")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><b>Home</b></a>
+                                </li>
+                            }
+                            else{
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                            }
+                            if(ViewBag.destacado == "Destinos")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Destinos"><b>Destinos</b></a>
+                                </li>
+                            }
+                            else{
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Destinos">Destinos</a>
+                                </li>
+                            }
+                        }
                         <form class="form-inline my-2 my-lg-0 buscar">
                             <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
