@@ -19,7 +19,7 @@ public static class BD
     {
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT pub.ID, pub.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID " + where + "ORDER BY pub.FechaPublicacion desc";
+            string sql = "SELECT pub.ID, pub.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID ORDER BY pub.FechaPublicacion desc";
             db.Execute(sql, new{});
         }
         _UserLog = User;
