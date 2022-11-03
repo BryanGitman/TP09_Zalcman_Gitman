@@ -134,6 +134,10 @@ a:hover {
   height: auto;
 }
 
+.fecha {
+  float:right;
+}
+
 .newPost {
   margin: 1%;
   width: 100px;

@@ -6,7 +6,24 @@ namespace TP09_Zalcman_Gitman.Models;
 
 public static class BD
 {
+    private static Usuario _UserLog = new Usuario();
+
     private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
+
+    public static Usuario ObtenerUser()
+    {
+        return _UserLog;
+    }
+
+    public static void CrearUser(Usuario User)
+    {
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT pub.ID, pub.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID " + where + "ORDER BY pub.FechaPublicacion desc";
+            db.Execute(sql, new{});
+        }
+        _UserLog = User;
+    }
 
     private static List<Publicacion> _ListadoPosts = new List<Publicacion>();
 
