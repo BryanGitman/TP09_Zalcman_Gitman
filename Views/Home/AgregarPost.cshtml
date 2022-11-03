@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Agregar Publicacion";
+    ViewData["Title"] = "Agregar Publicación";
 }
 <div class="container contenido">
     <br>
@@ -17,7 +17,7 @@
                             <label for="ingresarAP"> 
                                 <span>+</span>
                             </label>
-                            <p class="select">Seleccionar foto de perfil</p>
+                            <p class="selectD">Seleccionar foto 1</p>
                         </div>
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
@@ -26,7 +26,7 @@
                             <label for="ingresarAP"> 
                                 <span>+</span>
                             </label>
-                            <p class="select">Seleccionar foto de perfil</p>
+                            <p class="selectD">Seleccionar foto 2</p>
                         </div>
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
@@ -35,7 +35,7 @@
                             <label for="ingresarAP"> 
                                 <span>+</span>
                             </label>
-                            <p class="select">Seleccionar foto de perfil</p>
+                            <p class="selectD">Seleccionar foto 3</p>
                         </div>
                     </div> 
                     <div class = "select">
@@ -44,12 +44,36 @@
                     </div>  
                     <div class = "row">
                         <div class="col-sm-6">
-                            <select name = "IDDestino">
-                                <option value ="1">Argentina</option>
-                            </select> 
+                            <p class="selectD">Seleccionar destino</p>
+                            <select name = "IDDestino" class="inputD">
+                                <option value="1">Iguazú</option>
+                                <option value="2">Los Ángeles</option>
+                                <option value="3">Nueva York</option>
+                                <option value="4">Rio de Janeiro</option>
+                                <option value="5">París</option>
+                            </select>
                         </div>
-                        <div class="col-sm-6"></div>
+                        <div class="col-sm-5">
+                            <div class="derecha">
+                                <p>Calificar experiencia</p>
+                                <div class="alrevez">
+                                    <input type="hidden" name="Estrellas" value="0">
+                                    <input id="radio1" type="radio" name="Estrellas" value="5">
+                                    <label for="radio1"></label>
+                                    <input id="radio2" type="radio" name="Estrellas" value="4">
+                                    <label for="radio2"></label>
+                                    <input id="radio3" type="radio" name="Estrellas" value="3">
+                                    <label for="radio3"></label>
+                                    <input id="radio4" type="radio" name="Estrellas" value="2">
+                                    <label for="radio4"></label>
+                                    <input id="radio5" type="radio" name="Estrellas" value="1">
+                                    <label for="radio5"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
                     </div>
+                    <input type="submit" class="btn btn-primary publicar" value="Publicar">
                 </form>
             </div>
         </div>

@@ -13,16 +13,27 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index(int idUser, int idDest)
+    public IActionResult Index()
     {
         ViewBag.destacado = "Home";
+        BD.InicializarUser();
+        ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        return View("Home");
+    }
+
+    public IActionResult Home(int idUser, int idDest)
+    {
+        ViewBag.destacado = "Home";
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoPosts = BD.ListarPosts(idUser,idDest);
         return View();
     }
 
      public IActionResult Destinos()
     {
         ViewBag.destacado = "Destinos";
+        ViewBag.usuario = BD.ObtenerUser();
         return View();
     }
 
@@ -39,12 +50,19 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult SesionIniciada()
     {
-        return View("Index");
+        return View("Home");
     }
 
-    public IActionResult AgregarPost(int idUser)
+    public IActionResult AgregarPost()
     {
+        ViewBag.Usuario = BD.ObtenerUser();
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult GuardarPost(Publicacion post)
+    {
+        return View("Home");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

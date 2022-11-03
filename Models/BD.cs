@@ -10,6 +10,15 @@ public static class BD
 
     private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
 
+    public static void InicializarUser()
+    {
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Usuario WHERE ID = 0";
+            _UserLog = db.Query<Publicacion>(sql);
+        }
+    }
+
     public static Usuario ObtenerUser()
     {
         return _UserLog;

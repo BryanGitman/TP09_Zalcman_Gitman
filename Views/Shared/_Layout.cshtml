@@ -16,7 +16,7 @@
    <header>
         <nav class="menu navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="home" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo" src="/LogoProgViaje.png"></a>
+                <a class="home" asp-area="" asp-controller="Home" asp-action="Home"><img class="logo" src="/LogoProgViaje.png"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,12 +27,12 @@
                             if(ViewBag.destacado == "Home")
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><b>Home</b></a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Home"><b>Home</b></a>
                                 </li>
                             }
                             else{
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                                 </li>
                             }
                             if(ViewBag.destacado == "Destinos")
