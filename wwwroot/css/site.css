@@ -154,6 +154,7 @@ a:hover {
 .name{
   width: 15%;
   margin-left: 42.5%;
+  padding-left: 1%;
   margin-top: 4%;
   border-radius: 10px;
   border-style: none;
@@ -162,6 +163,7 @@ a:hover {
 .contra{
   width: 15%;
   margin-left: 42.5%;
+  padding-left: 1%;
   margin-top: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
@@ -178,3 +180,40 @@ a:hover {
 .atajologin{
   color: blue;
 }
+
+.inputR{
+  padding-left: 2%;
+  width: 100%;
+  margin: 4%;
+  border-radius: 10px;
+  border-style: none;
+}
+
+.registro{
+  margin-left: 30%;
+  width: 40%;
+}
+
+.ingresarFoto {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+  }
+
+  label[for="ingresarFP"] {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    background-color: #D9D9D9;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;    
+    text-align: center;
+  }
+
+  .select {
+    margin:3%;
+  }
