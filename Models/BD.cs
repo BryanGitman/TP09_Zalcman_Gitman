@@ -15,7 +15,7 @@ public static class BD
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Usuario WHERE ID = 0";
-            _UserLog = db.Query<Publicacion>(sql);
+            _UserLog = db.QueryFirstOrDefault<Usuario>(sql);
         }
     }
 

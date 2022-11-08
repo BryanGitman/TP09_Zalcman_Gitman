@@ -58,13 +58,13 @@
                 <p class="dataPost">Opinión sobre la experiencia de viaje en el destino</p>
                 <div class="row dataPost">
                     <div class="col-sm-1 col-2">
-                        <a><img src="/likeoff.png"></a>
+                        <a data-bs-toggle="modal" data-bs-target="#accesodenegado"><img src="/likeoff.png"></a>
                     </div>
                     <div class="col-sm-2 col-2">
                         <p>128</p>
                     </div>
                     <div class="col-sm-1 col-2">
-                        <a><img src="/comentario.png"></a>
+                        <a data-bs-toggle="modal" data-bs-target="#accesodenegado"><img src="/comentario.png"></a>
                     </div>
                     <div class="col-sm-2 col-2">
                         <p>24</p>
@@ -77,7 +77,26 @@
         </div>
         <div class="col-sm-2"></div>
         <div class="col-sm-1">
-            <a href='@Url.Action("AgregarPost","Home",new {idUser = 1})' class="newPost foot">+</a>
+            <a href='@Url.Action("AgregarPost","Home",new {idUser = 1})' class="newPost foot" data-bs-toggle="modal" data-bs-target="#accesodenegado">+</a>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="accesodenegado" tabindex="-1" aria-labelledby="accesodenegadolabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="accesodenegadolabel">Acceder para interactuar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <p class="text-center">Inicia sesión para poder likear, comentar y subir publicaciones</p>
+               <a class="btn btn-success registro" href='@Url.Action("IniciarSesion","Home")'>Iniciar Sesion</a> 
+               <br>
+               <br>
+               <p class="text-center">¿No tenés una cuenta? ¡Sumate a la comunidad!</p> 
+                <a class="btn btn-primary registro" href='@Url.Action("Registrarse","Home")'>Registrarse</a>
+            </div>
+            </div>
         </div>
     </div>
 </div>
