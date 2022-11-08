@@ -65,6 +65,16 @@ public class HomeController : Controller
         return View("Home");
     }
 
+    public List<Comentario> VerComentariosAjax(int IdPost)
+    {
+        return BD.ListarComentarios(IdPost);
+    }
+
+    public Usuario ObtenerUsuarioAjax()
+    {
+        return BD.ObtenerUser();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
