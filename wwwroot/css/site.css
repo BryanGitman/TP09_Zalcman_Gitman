@@ -304,4 +304,9 @@ a:hover {
   color:white !important;
 }
 
+.error{
+  color: red;
+  text-align: center;
+}
+
 
