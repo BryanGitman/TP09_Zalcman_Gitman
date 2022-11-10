@@ -26,10 +26,11 @@ public static class BD
 
     public static void CrearUser(Usuario User)
     {
+        int RegistrosAñadidos = 0;
+        string sql = "INSERT INTO Ususario (ID, NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pID, @pNombre, @pContra, @pPais, @pFoto)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT pub.ID, pub.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID ORDER BY pub.FechaPublicacion desc";
-            db.Execute(sql, new{});
+            RegistrosAñadidos = db.Execute(sql, new {pID = User.ID, pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
         }
         _UserLog = User;
     }
@@ -53,9 +54,21 @@ public static class BD
         }
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT pub.ID, pub.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID " + where + "ORDER BY pub.FechaPublicacion desc";
+            string sql = "SELECT pub.ID, pub.IDUsuario, us.FotoPerfil as FotoUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID " + where + "ORDER BY pub.FechaPublicacion desc";
             _ListadoPosts = db.Query<Publicacion>(sql).ToList();
         }
         return _ListadoPosts;
+    }
+
+    private static List<Comentario> _ListadoComentarios = new List<Comentario>();
+
+    public static List<Comentario> ListarComentarios(int idPost)
+    {
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT com.ID, com.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, com.IDPublicacion, com.Contenido, com.FechaComentario FROM Comentario com inner join Usuario us on com.IDUsuario = us.ID WHERE com.IDPublicacion = @pIDPost ORDER BY pub.FechaPublicacion desc";
+            _ListadoComentarios = db.Query<Publicacion>(sql, new{pIDPost = idPost}).ToList();
+        }
+        return _ListadoComentarios;
     }
 }

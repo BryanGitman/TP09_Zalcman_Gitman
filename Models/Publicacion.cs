@@ -4,6 +4,7 @@ public class Publicacion
 {
     private int _ID;
     private int _IDUsuario;
+    private string _FotoUsuario;
     private string _NombreUsuario;
     private string _PaisOrigen;
     private int _IDDestino;
@@ -15,10 +16,11 @@ public class Publicacion
     private string _Foto3;
     private DateTime _FechaPublicacion;   
 
-    public Publicacion(int id, int idusuario, string nombreusuario, string paisorigen, int iddestino, string destino, int estrellas, string opinion, string foto1, string foto2, string foto3, DateTime fechapublicacion)
+    public Publicacion(int id, int idusuario, string fotoUsuario, string nombreusuario, string paisorigen, int iddestino, string destino, int estrellas, string opinion, string foto1, string foto2, string foto3, DateTime fechapublicacion)
     {
         _ID = id;
         _IDUsuario = idusuario;
+        _FotoUsuario = fotoUsuario;
         _NombreUsuario= nombreusuario;
         _PaisOrigen = paisorigen;
         _IDDestino = iddestino;
@@ -47,6 +49,13 @@ public class Publicacion
         get { return _IDUsuario; }
         set { _IDUsuario = value; }
     }
+
+    public string FotoUsuario
+    {
+        get { return _FotoUsuario; }
+        set { _FotoUsuario = value; }
+    }
+
      public string NombreUsuario
     {
         get { return _NombreUsuario; }

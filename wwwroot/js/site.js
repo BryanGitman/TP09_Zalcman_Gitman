@@ -12,18 +12,24 @@ function HorizontalOVertical(id)
     }
 }
 
-function SesionIniciadaONo()
+function SesionIniciadaONo(id)
 {
     $.ajax(
         {
             type: 'POST',
             dataType: 'JSON',
-            url: '/Home/VerComentariosAjax',
+            url: '/Home/ObtenerUsuarioAjax',
             success:
             function (response)
             {
-                $("#comentariostitulo").html("Comentarios (" + response.Count + ")");
-                $("#comentarioscontenido").html("@{foreach(Temporadas temporada in " + response + "){<p>Temporada @temporada.NumeroTemporada - @temporada.TituloTemporada</p>}}");
+                if(response.ID == 0)
+                {
+                    $("#"+id).html("<a class='btn btn-success' asp-area='' asp-controller='Home' asp-action='IniciarSesion'>Iniciar sesión</a><a class='btn btn-primary' asp-area='' asp-controller='Home' asp-action='Registrarse'>Registrarse</a>");
+                }
+                else
+                {
+                    $("#"+id).html("<div class='circulo'><img src='/"+ response.FotoPerfil + "' id='imagen" + response.ID + "'><script>HorizontalOVertical('imagen0');</script></div>");
+                }
             }
         }
     );

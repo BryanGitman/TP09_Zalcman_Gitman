@@ -6,78 +6,129 @@
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-            <div class="post">
-                <br>
-                <div class="row dataPost">
-                    <div class="circulo">
-                        <img src="/selfie0.jpg" id="imagen0">
-                        <script>
-                            HorizontalOVertical("imagen0");
-                        </script>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="user">
-                            <p>usuario.viajero12345</p>
-                            <p class="text-muted">de País</p>
+            @{
+                foreach(Publicacion post in ViewBag.listadoPosts)
+                {
+                    <div class="post">
+                    <br>
+                    <div class="row dataPost">
+                        <div class="circulo">
+                            <img src="/@post.FotoPerfil" id="imagen@post.IDUsuario">
+                            <script>
+                                HorizontalOVertical("imagen@post.IDUsuario");
+                            </script>
                         </div>
-                        <p class="text-muted">Destino</p>
+                        <div class="col-sm-5">
+                            <div class="user">
+                                <p>@post.NombreUsuario</p>
+                                <p class="text-muted">de @post.PaisOrigen</p>
+                            </div>
+                            <p class="text-muted">@post.Destino</p>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="text-muted dataPost">Experiencia:</p>
+                            <div>
+                                @{
+                                    for(int i = 1;i <= 5;i++)
+                                    {
+                                        if(i<=post.Estrellas)
+                                        {
+                                            <img class="estrella" src="/estrellaon.png">
+                                        }
+                                        else
+                                        {
+                                            <img class="estrella" src="/estrellaoff.png">
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-5">
-                        <p class="text-muted dataPost">Experiencia:</p>
-                        <div>
-                            <img class="estrella" src="/estrellaon.png">
-                            <img class="estrella" src="/estrellaon.png">
-                            <img class="estrella" src="/estrellaon.png">
-                            <img class="estrella" src="/estrellaon.png">
-                            <img class="estrella" src="/estrellaoff.png">
+                    @{
+                        List<string> listadoFotos = new List<string>();
+                        if(post.Foto1 != null)
+                        {
+                            listadoFotos.Add(Foto1);
+                        }
+                        if(post.Foto2 != null)
+                        {
+                            listadoFotos.Add(Foto2);
+                        }
+                        if(post.Foto3 != null)
+                        {
+                            listadoFotos.Add(Foto3);
+                        }
+
+                        if(listadoFotos.Count > 0)
+                        {
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                if(listadoFotos.Count > 1)
+                                {
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        if(listadoFotos.count == 3)
+                                        {
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        }
+                                    </div>
+                                }
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                    <img src="/@listadoFotos[0]" class="d-block w-100" alt="...">
+                                    </div>
+                                    if(listadoFotos.Count > 1)
+                                    {
+                                        <div class="carousel-item">
+                                        <img src="/@listadoFotos[1]" class="d-block w-100" alt="...">
+                                        </div>
+                                        if(listadoFotos.count == 3)
+                                        {
+                                            <div class="carousel-item">
+                                            <img src="/@listadoFotos[2]" class="d-block w-100" alt="...">
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                if(listadoFotos > 1)
+                                {
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                }
+                            </div>
+                        }
+                    }
+                    <p class="dataPost">@post.Opinion</p>
+                    <div class="row dataPost">
+                        <div class="col-sm-1 col-2">
+                            <a data-bs-toggle="modal" data-bs-target="#accesodenegado"><img src="/likeoff.png"></a>
+                        </div>
+                        <div class="col-sm-2 col-2">
+                            <p>128</p>
+                        </div>
+                        <div class="col-sm-1 col-2">
+                            <a data-bs-toggle="modal" data-bs-target="#comentarios" onclick="MostrarComentarios('@post.ID')"><img src="/comentario.png"></a>
+                        </div>
+                        <div class="col-sm-2 col-2">
+                            <p>24</p>
+                        </div>
+                        <div class="col-sm-6 col-4">
+                            <p class="text-muted derecha">@post.FechaPublicacion.ToShortDateString()</p>
                         </div>
                     </div>
                 </div>
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                        <img src="/post1f1.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                        <img src="/post3f1.jpg" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-                <p class="dataPost">Opinión sobre la experiencia de viaje en el destino</p>
-                <div class="row dataPost">
-                    <div class="col-sm-1 col-2">
-                        <a data-bs-toggle="modal" data-bs-target="#accesodenegado"><img src="/likeoff.png"></a>
-                    </div>
-                    <div class="col-sm-2 col-2">
-                        <p>128</p>
-                    </div>
-                    <div class="col-sm-1 col-2">
-                        <a data-bs-toggle="modal" data-bs-target="#comentarios" onclick="MostrarComentarios(1)"><img src="/comentario.png"></a>
-                    </div>
-                    <div class="col-sm-2 col-2">
-                        <p>24</p>
-                    </div>
-                    <div class="col-sm-6 col-4">
-                        <p class="text-muted derecha">3/11/2022</p>
-                    </div>
-                </div>
-            </div>
+                }
+            }
         </div>
         <div class="col-sm-2"></div>
         <div class="col-sm-1">
-            <a href='@Url.Action("AgregarPost","Home",new {idUser = 1})' class="newPost foot" data-bs-toggle="modal" data-bs-target="#accesodenegado">+</a>
+            <a href='@Url.Action("AgregarPost","Home")' class="newPost foot" data-bs-toggle="modal" data-bs-target="#accesodenegado">+</a>
         </div>
     </div>
     
