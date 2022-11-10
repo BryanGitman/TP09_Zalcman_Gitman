@@ -65,10 +65,10 @@ public class HomeController : Controller
         return View("Home");
     }
 
-    public List<Comentario> VerComentariosAjax(int IdPost)
+   /* public List<Comentario> VerComentariosAjax(int IdPost)
     {
         return BD.ListarComentarios(IdPost);
-    }
+    }*/
 
     public Usuario ObtenerUsuarioAjax()
     {

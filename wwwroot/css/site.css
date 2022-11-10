@@ -278,4 +278,30 @@ a:hover {
 .coment{
   border-radius: 10px;
   border: 2px solid rgb(205, 205, 205);
+  padding: 1%;
 }
+
+.agcoment{
+  border-radius: 10px;
+  padding-left: 2%;
+  margin: 2%;
+  width: 75%;
+}
+
+.mimarco {
+  width: 150px;
+  height: 150px;
+  margin: 3%;
+  margin-left: 35%;
+}
+
+.opcionesperfil{
+  padding: 2%;
+  width: 41%;
+  height: auto;
+  margin: 2%;
+  margin-left: 30%;
+  color:white !important;
+}
+
+

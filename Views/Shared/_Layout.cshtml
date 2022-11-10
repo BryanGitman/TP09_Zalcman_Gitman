@@ -60,7 +60,7 @@
                     </ul>
                     <div class="sesion nav-item" id="sesion">
                         <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="IniciarSesion">Iniciar sesión</a>
-                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Registrarse">Registrarse</a>
+                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Registrarse" data-bs-toggle="modal" data-bs-target="#miperfil">Registrarse</a>
                     </div>
                     <script>
                         SesionIniciadaONo();
@@ -81,5 +81,25 @@
         </div>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <div class="modal fade" id="miperfil" tabindex="-1" aria-labelledby="miperfillabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="miperfillabel">Mi cuenta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="circulo mimarco">
+                <img src="/selfie0.jpg" id="imagen0">
+                <script>
+                    HorizontalOVertical("imagen0");
+                </script>
+            </div>
+            <h5 class="text-center">Nombre Usuario</h5> 
+            <a class="btn btn-primary opcionesperfil" href='@Url.Action("Home","Home",new {idUser = 1, idDest = 0})'>Mis Publicaciones</a>
+            <a class="btn btn-success opcionesperfil" href='@Url.Action("Index","Home")'>Cerrar Sesion</a>    
+            <br>        
+        </div>
+    </div>
 </body>
 </html>
