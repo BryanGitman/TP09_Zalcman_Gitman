@@ -2,17 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using TP09_Zalcman_Gitman.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TP09_Zalcman_Gitman.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private IWebHostEnvironment Environment;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IWebHostEnvironment environment)
     {
-        _logger = logger;
+        Environment = environment;
     }
 
     public IActionResult Index()
@@ -41,6 +43,7 @@ public class HomeController : Controller
 
     public IActionResult IniciarSesion()
     {
+        ViewBag.error = "";
         return View();
     }
 
@@ -50,8 +53,38 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult SesionIniciada()
+    public IActionResult SesionIniciada(string NomUser, string Contra)
     {
+        if(BD.UsuarioValido(NomUser,Contra))
+        {
+            ViewBag.destacado = "Home";
+            ViewBag.usuario = BD.ObtenerUser();
+            ViewBag.listadoPosts = BD.ListarPosts(0,0);
+            return View("Home");
+        }
+        else
+        {
+            ViewBag.error = "Nombre de usuario o contraseña no valido. Intenta de nuevo.";
+            return View("IniciarSesion");
+        }  
+    }
+
+     [HttpPost]
+    public IActionResult SesionCreada(Usuario user, IFormFile Archivo)
+    {
+        user.FotoPerfil = "selfie" + user.ID + ".jpg";
+        if(Archivo.Length>0)
+        {
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + user.FotoPerfil;
+            using(var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Archivo.CopyToAsync(stream);
+            }
+        }
+        BD.CrearUser(user);
+        ViewBag.destacado = "Home";
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
         return View("Home");
     }
 
@@ -82,4 +115,6 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+
 }

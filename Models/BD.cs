@@ -35,6 +35,25 @@ public static class BD
         _UserLog = User;
     }
 
+    public static bool UsuarioValido(string nomUser, string contra)
+    {
+        Usuario UserBuscado = new Usuario();
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Usuario WHERE NombreUsuario = @pNombre and Contraseña = @pContra";
+            UserBuscado = db.QueryFirstOrDefault<Usuario>(sql);
+        }
+        if(UserBuscado == null)
+        {
+            return false;
+        }
+        else
+        {
+            _UserLog = UserBuscado;
+            return true;
+        }
+    }
+
     private static List<Publicacion> _ListadoPosts = new List<Publicacion>();
 
     public static List<Publicacion> ListarPosts(int idUser, int idDest)
@@ -67,7 +86,7 @@ public static class BD
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT com.ID, com.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, com.IDPublicacion, com.Contenido, com.FechaComentario FROM Comentario com inner join Usuario us on com.IDUsuario = us.ID WHERE com.IDPublicacion = @pIDPost ORDER BY pub.FechaPublicacion desc";
-            _ListadoComentarios = db.Query<Publicacion>(sql, new{pIDPost = idPost}).ToList();
+            _ListadoComentarios = db.Query<Comentario>(sql, new{pIDPost = idPost}).ToList();
         }
         return _ListadoComentarios;
     }

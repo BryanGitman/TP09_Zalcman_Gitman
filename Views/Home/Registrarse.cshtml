@@ -3,7 +3,7 @@
 }
 <body>
     <div class="logoIS"><img src="/LogoProgViaje.png"></div>
-    <form method="post" action='@Url.Action("SesionIniciada","Home")'>
+    <form method="post" enctype="multipart/form-data" action='@Url.Action("SesionCreada","Home")'>
         <div class = "row registro">
             <div class = "col-sm-6">
                 <input name="NombreUsuario" class="inputR" type="text" placeholder="Nombre de Usuario">
