@@ -13,9 +13,9 @@
                     <br>
                     <div class="row dataPost">
                         <div class="circulo">
-                            <img src="/@post.FotoUsuario" id="@post.IDUsuario">
+                            <img src="/@post.FotoUsuario" id="imagen@(post.IDUsuario)">
                             <script>
-                                HorizontalOVertical("@post.IDUsuario");
+                                HorizontalOVertical("imagen"+@post.IDUsuario);
                             </script>
                         </div>
                         <div class="col-sm-5 col-9">
@@ -61,7 +61,7 @@
 
                         if(listadoFotos.Count > 0)
                         {
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
                                 @{
                                     if(listadoFotos.Count > 1)
                                     {
