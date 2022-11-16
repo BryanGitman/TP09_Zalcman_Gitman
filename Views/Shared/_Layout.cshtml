@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.png">
     <title>@ViewData["Title"] - WeFly</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -16,7 +17,7 @@
    <header>
         <nav class="menu navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="home" asp-area="" asp-controller="Home" asp-action="Home"><img class="logo" src="/LogoProgViaje.png"></a>
+                <a class="home" asp-area="" asp-controller="Home" asp-action="Home"><img src="/LogoProgViaje.png"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -47,10 +48,18 @@
                                 </li>
                             }
                         }
-                        <form class="form-inline my-2 my-lg-0 buscar">
+                        <form class="form-inline my-2 my-lg-0 buscar" method="post" action='@Url.Action("Home","Home",new {idUser = 0})'>
                             <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                               <input class="form-control mr-sm-2" type="search" placeholder="Buscá un destino" aria-label="Search"> 
+                               <select name = "idDest" class="form-control mr-sm-2 buscador" aria-label="Search">
+                                    <option value="0"><p class="text-muted">Buscá un destino</p></option>
+                                    @{
+                                        foreach(Destino dest in ViewBag.listadoDestinos)
+                                        {
+                                            <option value="@dest.ID">@dest.Nombre</option>
+                                        }
+                                    }
+                            </select>
                             </li>
                             <li class="nav-item">
                                <button class="btn btn-outline-secondary" type="submit">Buscar</button> 
@@ -58,7 +67,7 @@
                             </ul>
                         </form>
                     </ul>
-                    <div class="sesion nav-item" id="sesion"></div>
+                    <div class="derecha nav-item" id="sesion"></div>
                     <script>
                         SesionIniciadaONo("sesion");
                     </script>

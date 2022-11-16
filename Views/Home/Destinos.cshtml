@@ -3,53 +3,48 @@
 }
 <div class="container contenido">
     <br>
-    <a href='@Url.Action("Home","Home",new {idUser = 0, idDest = 1})' class = "container-fluid dest d-flex align-items-center justify-content-between">
-        <div class="circulo">
-            <img class="imgH" src="/argentina.png" >
-        </div> 
-        <div class="bandDest">
-        <p>Destino</p>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+        @{
+            foreach(Destino dest in ViewBag.listadoDestinos)
+            {
+                <div class = "post dest">
+                    <a href='@Url.Action("Home","Home",new {idUser = 0, idDest = @dest.ID})'>
+                        <div class="row dataPost">
+                            <div class="circulo">
+                                <img class="imgH" src="/@dest.FotoPais">
+                            </div>
+                            <div class="col-sm-5 col-2 dataPost">
+                                <p>@dest.Nombre</p>
+                            </div>
+                            <div class="col-sm-4 col-6 dataPost">
+                                @{
+                                    if(dest.PromedioEstrellas != 0)
+                                    {
+                                        for(int i = 1;i <= 5;i++)
+                                        {
+                                            if(i<=dest.PromedioEstrellas)
+                                            {
+                                                <img class="estrella" src="/estrellaon.png">
+                                            }
+                                            else
+                                            {
+                                                <img class="estrella" src="/estrellaoff.png">
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <br>
+            }
+        }
         </div>
-        <div class="d-flex">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaoff.png">
-        </div>
-    </a>
-    <br>
-    <a href='@Url.Action("Home","Home",new {idUser = 0, idDest = 2})' class = "container-fluid dest d-flex align-items-center justify-content-between">
-        <div class="circulo">
-            <img class="imgH" src="/brasil.png" >
-        </div>  
-        <div class="bandDest">
-        <p>Destino</p>
-        </div>
-        <div class="d-flex">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaoff.png">
-            <img class="estrella" src="/estrellaoff.png">
-        </div>
-    </a>
-    <br>
-    <a href='@Url.Action("Home","Home",new {idUser = 0, idDest = 3})' class = "container-fluid dest d-flex align-items-center justify-content-between">
-        <div class="circulo">
-            <img class="imgH" src="/eeuu.png" >
-        </div>  
-        <div class="bandDest">
-        <p>Destino</p>
-        </div>
-        <div class="d-flex">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaon.png">
-            <img class="estrella" src="/estrellaoff.png">
-        </div>
-    </a>
+        <div class="col-sm-3"></div>
+    </div>
 </div>
 
 

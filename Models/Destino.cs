@@ -5,12 +5,14 @@ public class Destino
     private int _ID;
     private string _Nombre;
     private string _FotoPais;
+    private int _PromedioEstrellas;
     
-    public Destino(int id, string nombre, string fotopais)
+    public Destino(int id, string nombre, string fotopais, int promedioestrellas)
     {
         _ID = id;
         _Nombre = nombre;
         _FotoPais = fotopais;
+        _PromedioEstrellas = promedioestrellas;
     }
 
      public Destino()
@@ -34,6 +36,12 @@ public class Destino
     {
         get { return _FotoPais; }
         set { _FotoPais = value; }
+    }
+
+    public int PromedioEstrellas
+    {
+        get { return _PromedioEstrellas; }
+        set { _PromedioEstrellas = value; }
     }
 
 }

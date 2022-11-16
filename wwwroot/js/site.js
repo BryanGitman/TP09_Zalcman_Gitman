@@ -28,7 +28,7 @@ function SesionIniciadaONo(id)
                 }
                 else
                 {
-                    $("#"+id).html("<div class='circulo'><img src='/"+ response.FotoPerfil + "' id='imagen" + response.ID + "'><script>HorizontalOVertical('imagen0');</script></div>");
+                    $("#"+id).html("<div class='circulo'><img src='/"+ response.FotoPerfil + "' id='" + response.ID + "'><script>HorizontalOVertical('" + response.ID + "');</script></div>");
                 }
             }
         }

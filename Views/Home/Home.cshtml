@@ -13,12 +13,12 @@
                     <br>
                     <div class="row dataPost">
                         <div class="circulo">
-                            <img src="/@post.FotoUsuario" id="imagen@post.IDUsuario">
+                            <img src="/@post.FotoUsuario" id="@post.IDUsuario">
                             <script>
-                                HorizontalOVertical("imagen@post.IDUsuario");
+                                HorizontalOVertical("@post.IDUsuario");
                             </script>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-5 col-9">
                             <div class="user">
                                 <p>@post.NombreUsuario</p>
                                 <p class="text-muted">de @post.PaisOrigen</p>
@@ -62,61 +62,67 @@
                         if(listadoFotos.Count > 0)
                         {
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                if(listadoFotos.Count > 1)
-                                {
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        if(listadoFotos.count == 3)
-                                        {
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                        }
-                                    </div>
-                                }
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                    <img src="/@listadoFotos[0]" class="d-block w-100" alt="...">
-                                    </div>
-                                    if(listadoFotos.Count >= 2)
+                                @{
+                                    if(listadoFotos.Count > 1)
                                     {
-                                        <div class="carousel-item">
-                                        <img src="/@listadoFotos[1]" class="d-block w-100" alt="...">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            @{
+                                                if(listadoFotos.Count == 3)
+                                                {
+                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                }
+                                            }
                                         </div>
-                                        if(listadoFotos.count == 3)
-                                        {
-                                            <div class="carousel-item">
-                                            <img src="/@listadoFotos[2]" class="d-block w-100" alt="...">
-                                            </div>
-                                        }
                                     }
-                                </div>
-                                if(listadoFotos > 1)
-                                {
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+                                    <div class="carousel-inner">
+                                        @{
+                                            <div class="carousel-item active">
+                                            <img src="/@listadoFotos[0]" class="d-block w-100" alt="...">
+                                            </div>
+                                            if(listadoFotos.Count >= 2)
+                                            {
+                                                <div class="carousel-item">
+                                                <img src="/@listadoFotos[1]" class="d-block w-100" alt="...">
+                                                </div>
+                                                if(listadoFotos.Count == 3)
+                                                {
+                                                    <div class="carousel-item">
+                                                    <img src="/@listadoFotos[2]" class="d-block w-100" alt="...">
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    if(listadoFotos.Count > 1)
+                                    {
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    }
                                 }
                             </div>
                         }
                     }
                     <p class="dataPost">@post.Opinion</p>
                     <div class="row dataPost">
-                        <div class="col-sm-1 col-2">
+                        <div class="col-sm-1 col-2 dest">
                             <a data-bs-toggle="modal" data-bs-target="#accesodenegado"><img src="/likeoff.png"></a>
                         </div>
-                        <div class="col-sm-2 col-2">
-                            <p>128</p>
+                        <div class="col-sm-2 col-2 dest">
+                            <p class="num">128</p>
                         </div>
-                        <div class="col-sm-1 col-2">
+                        <div class="col-sm-1 col-2 dest">
                             <a data-bs-toggle="modal" data-bs-target="#comentarios" onclick="MostrarComentarios('@post.ID')"><img src="/comentario.png"></a>
                         </div>
-                        <div class="col-sm-2 col-2">
-                            <p>24</p>
+                        <div class="col-sm-2 col-2 dest">
+                            <p class="num">24</p>
                         </div>
                         <div class="col-sm-6 col-4">
                             <p class="text-muted derecha">@post.FechaPublicacion.ToShortDateString()</p>
@@ -126,8 +132,7 @@
                 }
             }
         </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-1">
+        <div class="col-sm-3">
             <a href='@Url.Action("AgregarPost","Home")' class="newPost foot" data-bs-toggle="modal" data-bs-target="#accesodenegado">+</a>
         </div>
     </div>

@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
-                                <input type="file" name="Foto1" id="ingresarAP">
+                                <input type="file" name="Archivo1" id="ingresarAP">
                             </span>
                             <label for="ingresarAP"> 
                                 <span>+</span>
@@ -21,7 +21,7 @@
                         </div>
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
-                                <input type="file" name="Foto2" id="ingresarAP">
+                                <input type="file" name="Archivo2" id="ingresarAP">
                             </span>
                             <label for="ingresarAP"> 
                                 <span>+</span>
@@ -30,7 +30,7 @@
                         </div>
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
-                                <input type="file" name="Foto3" id="ingresarAP">
+                                <input type="file" name="Archivo3" id="ingresarAP">
                             </span>
                             <label for="ingresarAP"> 
                                 <span>+</span>
@@ -46,11 +46,12 @@
                         <div class="col-sm-6">
                             <p class="selectD">Seleccionar destino</p>
                             <select name = "IDDestino" class="inputD">
-                                <option value="1">Iguazú</option>
-                                <option value="2">Los Ángeles</option>
-                                <option value="3">Nueva York</option>
-                                <option value="4">Rio de Janeiro</option>
-                                <option value="5">París</option>
+                                @{
+                                    foreach(Destino dest in ViewBag.listadoDestinos)
+                                    {
+                                        <option value="@dest.ID">@dest.Nombre</option>
+                                    }
+                                }
                             </select>
                         </div>
                         <div class="col-sm-5">
@@ -73,6 +74,8 @@
                         </div>
                         <div class="col-sm-1"></div>
                     </div>
+                    <input type="hidden" name="IDUsuario" value="@ViewBag.usuario.ID">
+                    <input type="hidden" name="FechaPublicacion" value="@DateTime.Now">
                     <input type="submit" class="btn btn-primary publicar" value="Publicar">
                 </form>
             </div>

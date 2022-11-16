@@ -20,6 +20,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         BD.InicializarUser();
         ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
@@ -29,6 +30,7 @@ public class HomeController : Controller
     public IActionResult Home(int idUser, int idDest)
     {
         ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(idUser,idDest);
         return View();
@@ -38,32 +40,40 @@ public class HomeController : Controller
     {
         ViewBag.destacado = "Destinos";
         ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         return View();
     }
 
     public IActionResult IniciarSesion()
     {
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         ViewBag.error = "";
         return View();
     }
 
     public IActionResult Registrarse()
     {
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         return View();
     }
 
     [HttpPost]
-    public IActionResult SesionIniciada(string NomUser, string Contra)
+    public IActionResult SesionIniciada(string NombreUsuario, string Contraseña)
     {
-        if(BD.UsuarioValido(NomUser,Contra))
+        if(BD.UsuarioValido(NombreUsuario,Contraseña))
         {
             ViewBag.destacado = "Home";
+            ViewBag.listadoDestinos = BD.ListarDestinos();
             ViewBag.usuario = BD.ObtenerUser();
             ViewBag.listadoPosts = BD.ListarPosts(0,0);
             return View("Home");
         }
         else
         {
+            ViewBag.usuario = BD.ObtenerUser();
+            ViewBag.listadoDestinos = BD.ListarDestinos();
             ViewBag.error = "Nombre de usuario o contraseña no valido. Intenta de nuevo.";
             return View("IniciarSesion");
         }  
@@ -72,17 +82,22 @@ public class HomeController : Controller
      [HttpPost]
     public IActionResult SesionCreada(Usuario user, IFormFile Archivo)
     {
-        user.FotoPerfil = "selfie" + user.ID + ".jpg";
         if(Archivo.Length>0)
         {
+            user.FotoPerfil = "selfie" + user.ID + ".jpg";
             string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + user.FotoPerfil;
             using(var stream = System.IO.File.Create(wwwRootLocal))
             {
                 Archivo.CopyToAsync(stream);
             }
         }
+        else
+        {
+            user.FotoPerfil = "selfie0.jpg";
+        }
         BD.CrearUser(user);
         ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
         return View("Home");
@@ -90,13 +105,15 @@ public class HomeController : Controller
 
     public IActionResult AgregarPost()
     {
-        ViewBag.Usuario = BD.ObtenerUser();
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoDestinos = BD.ListarDestinos();
         return View();
     }
 
     [HttpPost]
-    public IActionResult GuardarPost(Publicacion post)
+    public IActionResult GuardarPost(Publicacion post, IFormFile Archivo1, IFormFile Archivo2, IFormFile Archivo3)
     {
+        BD.CrearPost(post);
         return View("Home");
     }
 

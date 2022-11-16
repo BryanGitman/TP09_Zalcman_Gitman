@@ -69,8 +69,8 @@ a:hover {
   margin-left: 3%;
 }
 
-.sesion {
-  float: right;
+.buscador {
+  width: max-content;
 }
 
 .contenido {
@@ -86,10 +86,6 @@ a:hover {
 
 .dest {
   padding: 1%;
-  width: 50%;
-  height: 10%;
-  background-color: #F5F5F5;
-  border-radius: 10px;
 }
 
 .circulo {
@@ -116,13 +112,6 @@ a:hover {
   display: flex;
 }
 
-.bandDest {
-  margin: 1%;
-  margin-bottom: -2%;
-  margin-left: -50%;
-  display: flex;
-}
-
 .estrella {
   width: 25px;
   height: auto;
@@ -132,6 +121,10 @@ a:hover {
   margin-left: 1%;
   width: 98%;
   height: auto;
+}
+
+.num {
+  font-size: 150%; 
 }
 
 .derecha {
@@ -145,7 +138,8 @@ a:hover {
   border-radius: 50%;
   background-color: #F5F5F5;
   text-align: center;
-  font-size: 250%; 
+  font-size: 250%;
+  float: right;
 }
 
 .logoIS{

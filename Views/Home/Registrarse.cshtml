@@ -6,17 +6,17 @@
     <form method="post" enctype="multipart/form-data" action='@Url.Action("SesionCreada","Home")'>
         <div class = "row registro">
             <div class = "col-sm-6">
-                <input name="NombreUsuario" class="inputR" type="text" placeholder="Nombre de Usuario">
+                <input name="NombreUsuario" class="inputR" type="text" placeholder="Nombre de Usuario" required>
             </div>
             <div class = "col-sm-6">
-                <input name="Contraseña" class="inputR" type="password" placeholder="Contraseña">
+                <input name="Contraseña" class="inputR" type="password" placeholder="Contraseña" required>
             </div>
             <div class = "col-sm-6">
-            <input name="Pais" class="inputR" type="text" placeholder="Pais de Residencia">
+            <input name="Pais" class="inputR" type="text" placeholder="Pais de Residencia" required>
             </div> 
                <div class = "col-sm-1">
                 <span class ="ingresarFoto"> 
-                    <input type="file" name="FotoPerfil" id="ingresarFP">
+                    <input type="file" name="Archivo" id="ingresarFP">
                 </span>
                 <label for="ingresarFP"> 
                     <span>+</span>
