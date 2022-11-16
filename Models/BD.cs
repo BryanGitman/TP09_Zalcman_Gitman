@@ -8,7 +8,7 @@ public static class BD
 {
     private static Usuario _UserLog = new Usuario();
 
-    private static string _connectionString = @"Server=LAPTOP-9G9HJR9U\SQLEXPRESS;DataBase=WeFly;Trusted_Connection=True;";
+    private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
 
     public static void InicializarUser()
     {
