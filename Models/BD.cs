@@ -27,10 +27,10 @@ public static class BD
     public static void CrearUser(Usuario User)
     {
         int RegistrosAñadidos = 0;
-        string sql = "INSERT INTO Ususario (ID, NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pID, @pNombre, @pContra, @pPais, @pFoto)";
+        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pNombre, @pContra, @pPais, @pFoto)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosAñadidos = db.Execute(sql, new {pID = User.ID, pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
+            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
         }
         _UserLog = User;
     }
