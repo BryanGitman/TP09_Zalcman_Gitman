@@ -40,13 +40,13 @@ public static class BD
         return(_UserLog != null);
     }
 
-    public static Usuario ActualizarFoto(Usuario user, string fotoPerfil)
+    public static void ActualizarFoto(Usuario user, string fotoPerfil)
     {
         int RegistrosActualizados = 0;
         string sql = "UPDATE Usuario SET FotoPerfil = @pFoto WHERE ID = @pIdUser";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosActualizados = db.Execute(sql, new {pFoto = User.FotoPerfil, pIdUser = user.ID});
+            RegistrosActualizados = db.Execute(sql, new {pFoto = user.FotoPerfil, pIdUser = user.ID});
         }
         bool esValido = UsuarioValido(user.NombreUsuario, user.Contraseña);
     }
