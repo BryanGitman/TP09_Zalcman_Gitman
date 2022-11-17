@@ -67,10 +67,24 @@
                             </ul>
                         </form>
                     </ul>
-                    <div class="derecha nav-item" id="sesion"></div>
-                    <script>
-                        SesionIniciadaONo("sesion");
-                    </script>
+                    <div class="derecha nav-item">
+                    @{
+                        if (ViewBag.usuario == null)
+                        {
+                            <a class='btn btn-success' asp-area='' asp-controller='Home' asp-action='IniciarSesion'>Iniciar sesión</a>
+                            <a class='btn btn-primary' asp-area='' asp-controller='Home' asp-action='Registrarse'>Registrarse</a>
+                        }
+                        else
+                        {
+                            <div class='circulo' data-bs-toggle='modal' data-bs-target='#miperfil' onclick='MostrarPerfil()'>
+                                <img src='/@ViewBag.usuario.FotoPerfil' id='imagen@(ViewBag.usuario.ID)'>
+                                <script>
+                                    HorizontalOVertical("imagen" + @ViewBag.usuario.ID);
+                                </script>
+                            </div>
+                        }
+                    }
+                    </div>
                 </div>
             </div>
         </nav>
@@ -95,14 +109,9 @@
                 <h5 class="modal-title" id="miperfillabel">Mi cuenta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="circulo mimarco">
-                <img src="/selfie0.jpg" id="imagen0">
-                <script>
-                    HorizontalOVertical("imagen0");
-                </script>
-            </div>
-            <h5 class="text-center">Nombre Usuario</h5> 
-            <a class="btn btn-primary opcionesperfil" href='@Url.Action("Home","Home",new {idUser = 1, idDest = 0})'>Mis Publicaciones</a>
+            <div class="circulo mimarco" id="foto"></div>
+            <h5 class="text-center" id="nombreusuario"></h5> 
+            <a class="btn btn-primary opcionesperfil" id="mispublicaciones" href='@Url.Action("Home","Home",new {idUser = 1, idDest = 0})'>Mis Publicaciones</a>
             <a class="btn btn-success opcionesperfil" href='@Url.Action("Index","Home")'>Cerrar Sesion</a>    
             <br>        
         </div>

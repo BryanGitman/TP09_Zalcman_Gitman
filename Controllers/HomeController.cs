@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TP09_Zalcman_Gitman.Models;
 using Microsoft.AspNetCore.Http;
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
@@ -64,9 +64,9 @@ public class HomeController : Controller
     {
         if(BD.UsuarioValido(NombreUsuario,Contraseña))
         {
+            ViewBag.usuario = BD.ObtenerUser();
             ViewBag.destacado = "Home";
             ViewBag.listadoDestinos = BD.ListarDestinos();
-            ViewBag.usuario = BD.ObtenerUser();
             ViewBag.listadoPosts = BD.ListarPosts(0,0);
             return View("Home");
         }
@@ -79,12 +79,14 @@ public class HomeController : Controller
         }  
     }
 
-     [HttpPost]
+    [HttpPost]
     public IActionResult SesionCreada(Usuario user, IFormFile Archivo)
     {
+        BD.CrearUser(user);
+        ViewBag.usuario = BD.ObtenerUser();
         if(Archivo.Length>0)
         {
-            user.FotoPerfil = "selfie" + user.ID + ".jpg";
+            user.FotoPerfil = "selfie" + ViewBag.usuario.ID + ".jpg";
             string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + user.FotoPerfil;
             using(var stream = System.IO.File.Create(wwwRootLocal))
             {
@@ -95,10 +97,10 @@ public class HomeController : Controller
         {
             user.FotoPerfil = "selfie0.jpg";
         }
-        BD.CrearUser(user);
+        BD.ActualizarFoto(ViewBag.usuario,user.FotoPerfil);
+        ViewBag.usuario = BD.ObtenerUser();
         ViewBag.destacado = "Home";
         ViewBag.listadoDestinos = BD.ListarDestinos();
-        ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
         return View("Home");
     }
@@ -120,6 +122,11 @@ public class HomeController : Controller
     public List<Comentario> VerComentariosAjax(int IdPost)
     {
         return BD.ListarComentarios(IdPost);
+    }
+
+    public List<int> VerLikesAjax(int IdPost)
+    {
+        return BD.ListarLikes(IdPost);
     }
 
     public Usuario ObtenerUsuarioAjax()

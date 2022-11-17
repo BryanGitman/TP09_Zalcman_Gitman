@@ -6,17 +6,12 @@ namespace TP09_Zalcman_Gitman.Models;
 
 public static class BD
 {
-    private static Usuario _UserLog = new Usuario();
-
     private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
+    private static Usuario _UserLog = null;
 
     public static void InicializarUser()
     {
-        using(SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = "SELECT * FROM Usuario WHERE ID = 0";
-            _UserLog = db.QueryFirstOrDefault<Usuario>(sql);
-        }
+        _UserLog = null;
     }
 
     public static Usuario ObtenerUser()
@@ -27,31 +22,33 @@ public static class BD
     public static void CrearUser(Usuario User)
     {
         int RegistrosAñadidos = 0;
-        string sql = "INSERT INTO Ususario (ID, NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pID, @pNombre, @pContra, @pPais, @pFoto)";
+        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pNombre, @pContra, @pPais, @pFoto)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosAñadidos = db.Execute(sql, new {pID = User.ID, pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
+            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
         }
-        _UserLog = User;
+        bool esValido = UsuarioValido(User.NombreUsuario, User.Contraseña);
     }
 
     public static bool UsuarioValido(string nomUser, string contra)
     {
-        Usuario UserBuscado = new Usuario();
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Usuario WHERE NombreUsuario = @pNombre and Contraseña = @pContra";
-            UserBuscado = db.QueryFirstOrDefault<Usuario>(sql, new {pNombre = nomUser, pContra = contra});
+            _UserLog = db.QueryFirstOrDefault<Usuario>(sql, new {pNombre = nomUser, pContra = contra});
         }
-        if(UserBuscado == null)
+        return(_UserLog != null);
+    }
+
+    public static Usuario ActualizarFoto(Usuario user, string fotoPerfil)
+    {
+        int RegistrosActualizados = 0;
+        string sql = "UPDATE Usuario SET FotoPerfil = @pFoto WHERE ID = @pIdUser";
+        using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            return false;
+            RegistrosActualizados = db.Execute(sql, new {pFoto = User.FotoPerfil, pIdUser = user.ID});
         }
-        else
-        {
-            _UserLog = UserBuscado;
-            return true;
-        }
+        bool esValido = UsuarioValido(user.NombreUsuario, user.Contraseña);
     }
 
     private static List<Publicacion> _ListadoPosts = new List<Publicacion>();
@@ -99,6 +96,18 @@ public static class BD
             _ListadoComentarios = db.Query<Comentario>(sql, new{pIDPost = idPost}).ToList();
         }
         return _ListadoComentarios;
+    }
+
+    private static List<int> _ListadoLikes = new List<int>();
+
+    public static List<int> ListarLikes(int idPost)
+    {
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT IDUsuario FROM Like WHERE IDPublicacion = @pIDPost";
+            _ListadoLikes = db.Query<int>(sql, new{pIDPost = idPost}).ToList();
+        }
+        return _ListadoLikes;
     }
 
     private static List<Destino> _ListadoDestinos = new List<Destino>();

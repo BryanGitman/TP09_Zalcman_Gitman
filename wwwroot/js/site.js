@@ -12,29 +12,6 @@ function HorizontalOVertical(id)
     }
 }
 
-function SesionIniciadaONo(id)
-{
-    $.ajax(
-        {
-            type: 'POST',
-            dataType: 'JSON',
-            url: '/Home/ObtenerUsuarioAjax',
-            success:
-            function (response)
-            {
-                if(response.ID == 0)
-                {
-                    $("#"+id).html("<a class='btn btn-success' asp-area='' asp-controller='Home' asp-action='IniciarSesion'>Iniciar sesión</a><a class='btn btn-primary' asp-area='' asp-controller='Home' asp-action='Registrarse'>Registrarse</a>");
-                }
-                else
-                {
-                    $("#"+id).html("<div class='circulo'><img src='/"+ response.FotoPerfil + "' id='" + response.ID + "'><script>HorizontalOVertical('" + response.ID + "');</script></div>");
-                }
-            }
-        }
-    );
-}
-
 function MostrarComentarios(IdP)
 {
     $.ajax(
@@ -47,14 +24,123 @@ function MostrarComentarios(IdP)
                 function (response)
                 {
                     $("#comentariostitulo").html("Comentarios (" + response.Count + ")");
-                    $("#comentarioscontenido").html("@{foreach(Temporadas temporada in " + response + "){<p>Temporada @temporada.NumeroTemporada - @temporada.TituloTemporada</p>}}");
-                },
-            error:
-                function (response)
-                {
-                    $("#comentariostitulo").html("Comentarios (" + response.Count + ")");
-                    $("#comentariostitulo").html("No se encontraron comentarios en esta publicación");
+                    $("#comentarioscontenido").html("@{foreach(Comentario coment in " + response + "){<p>Temporada @temporada.NumeroTemporada - @temporada.TituloTemporada</p>}}");
                 }
         }
     );
+}
+
+function MostrarPerfil()
+{
+    $.ajax(
+        {
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/Home/ObtenerUsuarioAjax',
+            success:
+            function (response)
+            {
+                $("#foto").html("<img src='/"+ response.FotoPerfil + "' id='imagen" + response.ID + "'><script>HorizontalOVertical('imagen" + response.ID + "');</script>");
+                $("#nombreusuario").text(response.NombreUsuario);
+                $("#mispublicaciones").attr('href','@Url.Action("Home","Home",new {idUser = ' + response.ID + ', idDest = 0})');
+            }
+        }
+    );
+}
+
+function AccesoSiONo(act,id)
+{
+    $.ajax(
+        {
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/Home/ObtenerUsuarioAjax',
+            success:
+            function (response)
+            {
+                if(response == null)
+                {
+                    $("#"+act+id).attr('data-bs-toggle','modal');
+                    $("#"+act+id).attr('data-bs-target','#accesodenegado');
+                }
+                else
+                {
+                    switch(act)
+                    {
+                        case "like":
+                            $("#"+act+id).attr('onclick','Likear('+id+','+response.ID+')');
+                            break;
+
+                        case "coment":
+                            $("#"+act+id).attr('data-bs-toggle','modal');
+                            $("#"+act+id).attr('data-bs-target','#comentarios');
+                            $("#"+act+id).attr('onclick','MostrarComentarios('+id+')');
+                            break;
+
+                        case "add":
+                            $("#"+act+id).attr('href','@Url.Action("AgregarPost","Home")');
+                            break;
+                    }
+                }
+            }
+        }
+    );
+}
+
+function LikeONo(idP,idU)
+{
+    $.ajax(
+        {
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/Home/VerLikesAjax',
+            data: { IdPost: IdP },
+            success:
+                function (response)
+                {
+                    response.forEach(element => {
+                        
+                    });
+                }
+        }
+    );
+}
+
+function CantComentarios(id)
+{
+    $.ajax(
+        {
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/Home/VerComentariosAjax',
+            data: { IdPost: IdP },
+            success:
+                function (response)
+                {
+                    $("#cantcoment"+id).text(response.Count);
+                }
+        }
+    );
+}
+
+function CantLikes(id)
+{
+    $.ajax(
+        {
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/Home/VerLikesAjax',
+            data: { IdPost: IdP },
+            success:
+                function (response)
+                {
+                    $("#cantlikes"+id).text(response.Count);
+                }
+        }
+    );
+}
+
+function Likear(idP,idU)
+{
+
 }
