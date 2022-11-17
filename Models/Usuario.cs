@@ -48,6 +48,6 @@ public class Usuario
     public string FotoPerfil
     {
         get { return _FotoPerfil; }
-        set { _NombreUsuario = value; }
+        set { _FotoPerfil = value; }
     }
 }
