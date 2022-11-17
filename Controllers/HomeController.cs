@@ -84,7 +84,7 @@ public class HomeController : Controller
     {
         BD.CrearUser(user);
         ViewBag.usuario = BD.ObtenerUser();
-        if(Archivo.Length>0)
+        if(Archivo != null)
         {
             user.FotoPerfil = "selfie" + ViewBag.usuario.ID + ".jpg";
             string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + user.FotoPerfil;

@@ -113,14 +113,14 @@
                     <p class="dataPost">@post.Opinion</p>
                     <div class="row dataPost">
                         <div class="col-sm-1 col-2 dest">
-                            <a id="like@(post.ID)"><img src="/likeoff.png"></a>
+                            <a id="like@(post.ID)"></a>
                             <script>
                                 AccesoSiONo("like",@post.ID);
-                                LikeONo(@post.ID,@ViewBag.usuario.ID);
+                                LikeONo(@post.ID,@ViewBag.usuario);
                             </script>
                         </div>
                         <div class="col-sm-2 col-2 dest">
-                            <p class="num" id="cantlikes@(post.ID)">128</p>
+                            <p class="num" id="cantlikes@(post.ID)"></p>
                             <script>
                                 CantLikes(@post.ID);
                             </script>
@@ -132,7 +132,7 @@
                             </script>
                         </div>
                         <div class="col-sm-2 col-2 dest">
-                            <p class="num" id="cantcoment@(post.ID)">24</p>
+                            <p class="num" id="cantcoment@(post.ID)"></p>
                             <script>
                                 CantComentarios(@post.ID);
                             </script>
@@ -179,46 +179,7 @@
                 <h5 class="modal-title" id="comentariostitulo"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="comentarioscontenido">
-               <div class="row dataPost coment">
-                    <div class="circulo">
-                        <img src="/selfie0.jpg" id="imagen0">
-                        <script>
-                            HorizontalOVertical("imagen0");
-                        </script>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="user">
-                            <p><b>usuario.viaje12345</b></p>
-                            <p class="text-muted">de País</p>
-                        </div>
-                        <p>Comentario del usuario</p>
-                        <p class="text-muted derecha" >8/11/22</p>
-                    </div>
-                </div>
-                <div class="row dataPost coment">
-                    <div class="circulo">
-                        <img src="/selfie0.jpg" id="imagen0">
-                        <script>
-                            HorizontalOVertical("imagen0");
-                        </script>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="user">
-                            <p><b>usuario.viaje12345</b></p>
-                            <p class="text-muted">de País</p>
-                        </div>
-                        <p>Comentario del usuario</p>
-                        <p class="text-muted derecha" >8/11/22</p>
-                    </div>
-                </div>
-                <footer>
-                    <form method="post" action='@Url.Action("GuardarComentario","Home")'>
-                        <input type="text" class= 'agcoment' placeholder ="Agregá un comentario">
-                        <input type="submit" class="btn btn-primary" value = 'Publicar'>
-                    </form>
-                </footer>
-            </div>
+            <div class="modal-body" id="comentarioscontenido"></div>
         </div>
     </div>
 </div>

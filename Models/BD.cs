@@ -22,10 +22,10 @@ public static class BD
     public static void CrearUser(Usuario User)
     {
         int RegistrosAñadidos = 0;
-        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pNombre, @pContra, @pPais, @pFoto)";
+        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais) VALUES (@pNombre, @pContra, @pPais)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
+            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais});
         }
         bool esValido = UsuarioValido(User.NombreUsuario, User.Contraseña);
     }
@@ -104,7 +104,7 @@ public static class BD
     {
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT IDUsuario FROM Like WHERE IDPublicacion = @pIDPost";
+            string sql = "SELECT IDUsuario FROM Likes WHERE IDPublicacion = @pIDPost";
             _ListadoLikes = db.Query<int>(sql, new{pIDPost = idPost}).ToList();
         }
         return _ListadoLikes;
