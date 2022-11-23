@@ -23,13 +23,23 @@ function MostrarComentarios(IdP)
             success:
                 function (response)
                 {
-                    $("#comentariostitulo").html("Comentarios (" + response.Count + ")");
-                    var content = "";
-                    response.forEach(element => {
-                        content += "<div class='row dataPost coment'><div class='circulo'><img src='/" + element.FotoPerfil + "' id='imagenC" + element.ID + "'><script>HorizontalOVertical('imagenC" + element.ID + "');</script></div><div class='col-sm-9'><div class='user'><p><b>" + element.NombreUsuario + "</b></p><p class='text-muted'>de " + element.PaisOrigen + "</p></div><p>" + element.Contenido + "</p><p class='text-muted derecha'>" + element.FechaComentario.ToShortDateString() + "</p></div></div>";
-                    });
-                    content += "<footer><form method='post' action='@Url.Action('GuardarComentario','Home')'><input type='text' name='Contenido' class= 'agcoment' placeholder ='Agregá un comentario'><input type='hidden' name='IDUsuario' value='@ViewBag.usuario.ID'><input type='hidden' name='FechaComentario' value='@DateTime.Now'><input type='hidden' name='IDPublicacion' value='" + idP + "'><input type='submit' class='btn btn-primary' value = 'Publicar'></form></footer>";
-                    $("#comentarioscontenido").html(content);
+                    if(response != null)
+                    {
+                        $("#comentariostitulo").html("Comentarios (" + response.Count + ")");
+                        var content = "";
+                        response.forEach(element => {
+                            content += "<div class='row dataPost coment'><div class='circulo'><img src='/" + element.FotoPerfil + "' id='imagenC" + element.ID + "'><script>HorizontalOVertical('imagenC" + element.ID + "');</script></div><div class='col-sm-9'><div class='user'><p><b>" + element.NombreUsuario + "</b></p><p class='text-muted'>de " + element.PaisOrigen + "</p></div><p>" + element.Contenido + "</p><p class='text-muted derecha'>" + element.FechaComentario.ToShortDateString() + "</p></div></div>";
+                        });
+                        content += "<footer><form method='post' action='@Url.Action('GuardarComentario','Home')'><input type='text' name='Contenido' class= 'agcoment' placeholder ='Agregá un comentario'><input type='hidden' name='IDUsuario' value='@ViewBag.usuario.ID'><input type='hidden' name='FechaComentario' value='@DateTime.Now'><input type='hidden' name='IDPublicacion' value='" + idP + "'><input type='submit' class='btn btn-primary' value = 'Publicar'></form></footer>";
+                        $("#comentarioscontenido").html(content);
+                    }
+                    else
+                    {
+                        $("#comentariostitulo").html("Comentarios (0)");
+                        var content = "No hay comentarios aún. Sé el primero en comentar"
+                        content += "<footer><form method='post' action='@Url.Action('GuardarComentario','Home')'><input type='text' name='Contenido' class= 'agcoment' placeholder ='Agregá un comentario'><input type='hidden' name='IDUsuario' value='@ViewBag.usuario.ID'><input type='hidden' name='FechaComentario' value='@DateTime.Now'><input type='hidden' name='IDPublicacion' value='" + idP + "'><input type='submit' class='btn btn-primary' value = 'Publicar'></form></footer>";
+                        $("#comentarioscontenido").html(content);
+                    }
                 }
         }
     );
@@ -81,10 +91,6 @@ function AccesoSiONo(act,id)
                             $("#"+act+id).attr('data-bs-target','#comentarios');
                             $("#"+act+id).attr('onclick','MostrarComentarios('+id+')');
                             break;
-
-                        case "add":
-                            $("#"+act+id).attr('href','@Url.Action("AgregarPost","Home")');
-                            break;
                     }
                 }
             }
@@ -104,12 +110,15 @@ function LikeONo(idP,user)
                 function (response)
                 {
                     var like = false;
-                    response.forEach(element => {
-                        if(element == user.ID)
-                        {
-                            like = true;
-                        }
-                    });
+                    if(user != null)
+                    {
+                        response.forEach(element => {
+                            if(element == user.ID)
+                            {
+                                like = true;
+                            }
+                        });
+                    }
                     if(like)
                     {
                         $("#like"+idP).html("<img id='l"+idP+"' src='/likeon.png'>")
@@ -134,7 +143,14 @@ function CantComentarios(id)
             success:
                 function (response)
                 {
-                    $("#cantcoment"+id).text(response.Count);
+                    if(response != null)
+                    {
+                        $("#cantcoment"+id).text(response.Count);
+                    }
+                    else
+                    {
+                        $("#cantcoment"+id).text("0");
+                    }
                 }
         }
     );
@@ -151,7 +167,14 @@ function CantLikes(id)
             success:
                 function (response)
                 {
-                    $("#cantlikes"+id).text(response.Count);
+                    if(response != null)
+                    {
+                        $("#cantlikes"+id).text(response.Count);
+                    }
+                    else
+                    {
+                        $("#cantlikes"+id).text("0");
+                    }
                 }
         }
     );

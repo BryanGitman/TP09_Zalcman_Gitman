@@ -74,7 +74,7 @@ public class HomeController : Controller
         {
             ViewBag.usuario = BD.ObtenerUser();
             ViewBag.listadoDestinos = BD.ListarDestinos();
-            ViewBag.error = "Nombre de usuario o contraseña no valido. Intenta de nuevo.";
+            ViewBag.error = "Nombre de usuario o contraseña no válido. Intentá de nuevo.";
             return View("IniciarSesion");
         }  
     }
@@ -82,6 +82,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult SesionCreada(Usuario user, IFormFile Archivo)
     {
+        user.FotoPerfil = "selfie0.jpg";
         BD.CrearUser(user);
         ViewBag.usuario = BD.ObtenerUser();
         if(Archivo != null)
@@ -92,13 +93,9 @@ public class HomeController : Controller
             {
                 Archivo.CopyToAsync(stream);
             }
+            BD.ActualizarFoto(ViewBag.usuario,user.FotoPerfil);
+            ViewBag.usuario = BD.ObtenerUser();
         }
-        else
-        {
-            user.FotoPerfil = "selfie0.jpg";
-        }
-        BD.ActualizarFoto(ViewBag.usuario,user.FotoPerfil);
-        ViewBag.usuario = BD.ObtenerUser();
         ViewBag.destacado = "Home";
         ViewBag.listadoDestinos = BD.ListarDestinos();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
@@ -116,6 +113,40 @@ public class HomeController : Controller
     public IActionResult GuardarPost(Publicacion post, IFormFile Archivo1, IFormFile Archivo2, IFormFile Archivo3)
     {
         BD.CrearPost(post);
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        int id = ViewBag.listadoPosts[0].ID;
+        if(Archivo1 != null)
+        {
+            post.Foto1 = "post" + id + "f1.jpg";
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + post.Foto1;
+            using(var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Archivo1.CopyToAsync(stream);
+            }
+        }
+        if(Archivo2 != null)
+        {
+            post.Foto2 = "post" + id + "f2.jpg";
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + post.Foto2;
+            using(var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Archivo2.CopyToAsync(stream);
+            }
+        }
+        if(Archivo3 != null)
+        {
+            post.Foto3 = "post" + id + "f3.jpg";
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + post.Foto3;
+            using(var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Archivo3.CopyToAsync(stream);
+            }
+        }
+        BD.ActualizarPost(id,post.Foto1,post.Foto2,post.Foto3);
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
+        ViewBag.usuario = BD.ObtenerUser();
         return View("Home");
     }
 

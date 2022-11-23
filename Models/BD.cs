@@ -6,7 +6,7 @@ namespace TP09_Zalcman_Gitman.Models;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
+    private static string _connectionString = @"Server=LAPTOP-9G9HJR9U\SQLEXPRESS;DataBase=WeFly;Trusted_Connection=True;";
     private static Usuario _UserLog = null;
 
     public static void InicializarUser()
@@ -22,10 +22,10 @@ public static class BD
     public static void CrearUser(Usuario User)
     {
         int RegistrosAñadidos = 0;
-        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais) VALUES (@pNombre, @pContra, @pPais)";
+        string sql = "INSERT INTO Usuario (NombreUsuario, Contraseña, Pais, FotoPerfil) VALUES (@pNombre, @pContra, @pPais, @pFoto)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais});
+            RegistrosAñadidos = db.Execute(sql, new {pNombre = User.NombreUsuario, pContra = User.Contraseña, pPais = User.Pais, pFoto = User.FotoPerfil});
         }
         bool esValido = UsuarioValido(User.NombreUsuario, User.Contraseña);
     }
@@ -46,7 +46,7 @@ public static class BD
         string sql = "UPDATE Usuario SET FotoPerfil = @pFoto WHERE ID = @pIdUser";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosActualizados = db.Execute(sql, new {pFoto = user.FotoPerfil, pIdUser = user.ID});
+            RegistrosActualizados = db.Execute(sql, new {pFoto = fotoPerfil, pIdUser = user.ID});
         }
         bool esValido = UsuarioValido(user.NombreUsuario, user.Contraseña);
     }
@@ -83,6 +83,16 @@ public static class BD
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             RegistrosAñadidos = db.Execute(sql, new {pIDUser = post.IDUsuario, pIDDest = post.IDDestino, pEstrellas = post.Estrellas, pOpinion = post.Opinion, pFoto1 = post.Foto1, pFoto2 = post.Foto2, pFoto3 = post.Foto3, pFecha = post.FechaPublicacion});
+        }
+    }
+
+    public static void ActualizarPost(int id, string foto1, string foto2, string foto3)
+    {
+        int RegistrosActualizados = 0;
+        string sql = "UPDATE Publicacion SET Foto1 = @pFoto1, Foto2 = @pFoto2, Foto3 = @pFoto3 WHERE ID = @pIdPost";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            RegistrosActualizados = db.Execute(sql, new {pFoto1 = foto1, pFoto2 = foto2, pFoto3 = foto3, pIdPost = id});
         }
     }
 
