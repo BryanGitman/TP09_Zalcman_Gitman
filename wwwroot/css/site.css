@@ -303,4 +303,11 @@ a:hover {
   text-align: center;
 }
 
+.eliminar{
+  color: red;
+  width: 10%;
+  height: auto;
+  border-radius: 50%;
+}
+
 

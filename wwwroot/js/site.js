@@ -55,9 +55,7 @@ function MostrarPerfil()
             success:
             function (response)
             {
-                $("#foto").html("<img src='/"+ response.FotoPerfil + "' id='imagen" + response.ID + "'><script>HorizontalOVertical('imagen" + response.ID + "');</script>");
-                $("#nombreusuario").text(response.NombreUsuario);
-                $("#mispublicaciones").attr('href','@Url.Action("Home","Home",new {idUser = ' + response.ID + ', idDest = 0})');
+                $("#miperfilcontenido").html("<div class='circulo mimarco'><img src='/"+ response.FotoPerfil + "' id='imagen" + response.ID + "'><script>HorizontalOVertical('imagen" + response.ID + "');</script></div><h5 class='text-center'>" + response.NombreUsuario + "</h5><a class='btn btn-primary opcionesperfil' href='@Url.Action('Home','Home',new {idUser = " + response.ID + ", idDest = 0})'>Mis Publicaciones</a><a class='btn btn-success opcionesperfil' href='@Url.Action('Index','Home')'>Cerrar Sesion</a>");
             }
         }
     );
@@ -98,7 +96,7 @@ function AccesoSiONo(act,id)
     );
 }
 
-function LikeONo(idP,user)
+function LikeONo(idP,idU)
 {
     $.ajax(
         {
@@ -110,15 +108,12 @@ function LikeONo(idP,user)
                 function (response)
                 {
                     var like = false;
-                    if(user != null)
-                    {
-                        response.forEach(element => {
-                            if(element == user.ID)
-                            {
-                                like = true;
-                            }
-                        });
-                    }
+                    response.forEach(element => {
+                        if(element == idU)
+                        {
+                            like = true;
+                        }
+                    });
                     if(like)
                     {
                         $("#like"+idP).html("<img id='l"+idP+"' src='/likeon.png'>")
@@ -190,4 +185,9 @@ function Likear(idP,idU)
     {
         $("#l"+idP).src == "/likeoff.png"
     }
+}
+
+function EliminarPost(id)
+{
+    $("#eliminarpcontenido").html("<p class='text-center'>¿Estás seguro de que querés eliminar esta publicación?</p><a class='btn btn-danger opcionesperfil' href='@Url.Action('EliminarPost','Home', new {idPost = " + id + "})'>Eliminar</a>");
 }

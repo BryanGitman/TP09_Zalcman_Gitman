@@ -6,7 +6,7 @@ namespace TP09_Zalcman_Gitman.Models;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=LAPTOP-9G9HJR9U\SQLEXPRESS;DataBase=WeFly;Trusted_Connection=True;";
+    private static string _connectionString = @"Server=.;DataBase=WeFly;Trusted_Connection=True;";
     private static Usuario _UserLog = null;
 
     public static void InicializarUser()
@@ -83,6 +83,16 @@ public static class BD
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             RegistrosAñadidos = db.Execute(sql, new {pIDUser = post.IDUsuario, pIDDest = post.IDDestino, pEstrellas = post.Estrellas, pOpinion = post.Opinion, pFoto1 = post.Foto1, pFoto2 = post.Foto2, pFoto3 = post.Foto3, pFecha = post.FechaPublicacion});
+        }
+    }
+
+    public static void EliminarPost(int idPost)
+    {
+        int RegistrosActualizados = 0;
+        string sql = "DELETE FROM Publicacion WHERE ID = @pIdPost";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            RegistrosActualizados = db.Execute(sql, new {pIdPost = idPost});
         }
     }
 

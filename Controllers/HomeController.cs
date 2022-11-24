@@ -150,6 +150,16 @@ public class HomeController : Controller
         return View("Home");
     }
 
+    public IActionResult EliminarPost(int idPost)
+    {
+        BD.EliminarPost(idPost);
+        ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        return View("Home");
+    }
+
     public List<Comentario> VerComentariosAjax(int IdPost)
     {
         return BD.ListarComentarios(IdPost);
