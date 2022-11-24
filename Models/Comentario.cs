@@ -47,7 +47,7 @@ public class Comentario
     public string FotoPerfil    
     {
         get { return _FotoPerfil; }
-        set { _NombreUsuario = value; }
+        set { _FotoPerfil = value; }
     }
      public string PaisOrigen
     {

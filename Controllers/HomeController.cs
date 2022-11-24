@@ -160,19 +160,61 @@ public class HomeController : Controller
         return View("Home");
     }
 
+    public IActionResult GuardarComentario(Comentario coment)
+    {
+        BD.CrearComent(coment);
+        ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        return View("Home");
+    }
+
+    public IActionResult EliminarComent(int idComent)
+    {
+        BD.EliminarComent(idComent);
+        ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        return View("Home");
+    }
+
     public List<Comentario> VerComentariosAjax(int IdPost)
     {
         return BD.ListarComentarios(IdPost);
     }
 
-    public List<int> VerLikesAjax(int IdPost)
+    public int VerCantComentAjax(int IdPost)
     {
-        return BD.ListarLikes(IdPost);
+        return BD.ContarComentarios(IdPost);
+    }
+
+    public bool VerSiLikeAjax(int IdPost, int IdUser)
+    {
+        return BD.ListarLike(IdPost,IdUser);
+    }
+
+    public int VerCantLikesAjax(int IdPost)
+    {
+        return BD.ContarLikes(IdPost);
     }
 
     public Usuario ObtenerUsuarioAjax()
     {
         return BD.ObtenerUser();
+    }
+
+    public int LikearAjax(int IdPost, int IdUser)
+    {
+        BD.Likear(IdPost,IdUser);
+        return BD.ContarLikes(IdPost);
+    }
+
+    public int DeslikearAjax(int IdPost, int IdUser)
+    {
+        BD.Deslikear(IdPost,IdUser);
+        return BD.ContarLikes(IdPost);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -106,28 +106,89 @@ public static class BD
         }
     }
 
+    public static int ContarComentarios(int idPost)
+    {
+        int cantComent = 0;
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT count(ID) FROM Comentario WHERE IDPublicacion = @pIDPost";
+            cantComent = db.QueryFirstOrDefault<int>(sql, new {pIDPost = idPost});
+        }
+        return cantComent;
+    }
+
     private static List<Comentario> _ListadoComentarios = new List<Comentario>();
 
     public static List<Comentario> ListarComentarios(int idPost)
     {
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT com.ID, com.IDUsuario, us.NombreUsuario, us.Pais as PaisOrigen, com.IDPublicacion, com.Contenido, com.FechaComentario FROM Comentario com inner join Usuario us on com.IDUsuario = us.ID WHERE com.IDPublicacion = @pIDPost ORDER BY com.FechaComentario desc";
+            string sql = "SELECT com.ID, com.IDUsuario, us.NombreUsuario, us.FotoPerfil, us.Pais as PaisOrigen, com.IDPublicacion, com.Contenido, com.FechaComentario FROM Comentario com inner join Usuario us on com.IDUsuario = us.ID WHERE com.IDPublicacion = @pIDPost ORDER BY com.FechaComentario desc";
             _ListadoComentarios = db.Query<Comentario>(sql, new{pIDPost = idPost}).ToList();
         }
         return _ListadoComentarios;
     }
 
-    private static List<int> _ListadoLikes = new List<int>();
-
-    public static List<int> ListarLikes(int idPost)
+    public static void CrearComent(Comentario coment)
     {
+        int RegistrosAñadidos = 0;
+        string sql = "INSERT INTO Comentario (IDUsuario, IDPublicacion, Contenido, FechaComentario) VALUES (@pIDUser, @pIDPost, @pContent, @pFecha)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT IDUsuario FROM Likes WHERE IDPublicacion = @pIDPost";
-            _ListadoLikes = db.Query<int>(sql, new{pIDPost = idPost}).ToList();
+            RegistrosAñadidos = db.Execute(sql, new {pIDUser = coment.IDUsuario, pIDPost = coment.IDPublicacion, pContent = coment.Contenido, pFecha = coment.FechaComentario});
         }
-        return _ListadoLikes;
+    }
+
+    public static void EliminarComent(int idComent)
+    {
+        int RegistrosActualizados = 0;
+        string sql = "DELETE FROM Comentario WHERE ID = @pIdComent";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            RegistrosActualizados = db.Execute(sql, new {pIdComent = idComent});
+        }
+    }
+
+    public static bool ListarLike(int idPost, int idUser)
+    {
+        int id = 0;
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT ID FROM Likes WHERE IDPublicacion = @pIDPost and IDUsuario = @pIDUser";
+            id = db.QueryFirstOrDefault<int>(sql, new {pIDPost = idPost, pIDUser = idUser});
+        }
+        return (id != 0);
+    }
+
+    public static int ContarLikes(int idPost)
+    {
+        int cantLikes = 0;
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT count(ID) FROM Likes WHERE IDPublicacion = @pIDPost";
+            cantLikes = db.QueryFirstOrDefault<int>(sql, new {pIDPost = idPost});
+        }
+        return cantLikes;
+    }
+
+    public static void Likear(int IdPost, int IdUser)
+    {
+        int RegistrosAñadidos = 0;
+        string sql = "INSERT INTO Likes (IDUsuario, IDPublicacion) VALUES (@pIDUser, @pIDPost)";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            RegistrosAñadidos = db.Execute(sql, new {pIDUser = IdUser, pIDPost = IdPost});
+        }
+    }
+
+    public static void Deslikear(int IdPost, int IdUser)
+    {
+        int RegistrosAñadidos = 0;
+        string sql = "DELETE FROM Likes WHERE IDUsuario = @pIDUser and IDPublicacion = @pIDPost";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            RegistrosAñadidos = db.Execute(sql, new {pIDUser = IdUser, pIDPost = IdPost});
+        }
     }
 
     private static List<Destino> _ListadoDestinos = new List<Destino>();
