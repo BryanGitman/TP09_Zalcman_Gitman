@@ -76,14 +76,26 @@ public static class BD
         return _ListadoPosts;
     }
 
-    public static void CrearPost(Publicacion post)
+    public static List<Publicacion> ListarPostsLike(int idUser)
     {
-        int RegistrosAñadidos = 0;
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT pub.ID, pub.IDUsuario, us.FotoPerfil as FotoUsuario, us.NombreUsuario, us.Pais as PaisOrigen, pub.IDDestino, des.Nombre as Destino, pub.Estrellas, pub.Opinion, pub.Foto1, pub.Foto2, pub.Foto3, pub.FechaPublicacion FROM Publicacion pub inner join Usuario us on pub.IDUsuario = us.ID inner join Destino des on pub.IDDestino = des.ID inner join Likes li on li.IDPublicacion = pub.ID WHERE li.IDUsuario = @pIdUser ORDER BY pub.FechaPublicacion desc";
+            _ListadoPosts = db.Query<Publicacion>(sql, new {pIdUser = idUser}).ToList();
+        }
+        return _ListadoPosts;
+    }
+
+    public static int CrearPost(Publicacion post)
+    {
+        int UltimoId = 0;
         string sql = "INSERT INTO Publicacion (IDUsuario, IDDestino, Estrellas, Opinion, Foto1, Foto2, Foto3, FechaPublicacion) VALUES (@pIDUser, @pIDDest, @pEstrellas, @pOpinion, @pFoto1, @pFoto2, @pFoto3, @pFecha)";
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            RegistrosAñadidos = db.Execute(sql, new {pIDUser = post.IDUsuario, pIDDest = post.IDDestino, pEstrellas = post.Estrellas, pOpinion = post.Opinion, pFoto1 = post.Foto1, pFoto2 = post.Foto2, pFoto3 = post.Foto3, pFecha = post.FechaPublicacion});
+            db.Execute(sql, new {pIDUser = post.IDUsuario, pIDDest = post.IDDestino, pEstrellas = post.Estrellas, pOpinion = post.Opinion, pFoto1 = post.Foto1, pFoto2 = post.Foto2, pFoto3 = post.Foto3, pFecha = post.FechaPublicacion});
+            UltimoId = db.QueryFirstOrDefault<int>("SELECT MAX(ID) FROM Publicacion");
         }
+        return UltimoId;
     }
 
     public static void EliminarPost(int idPost)

@@ -112,9 +112,8 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult GuardarPost(Publicacion post, IFormFile Archivo1, IFormFile Archivo2, IFormFile Archivo3)
     {
-        BD.CrearPost(post);
+        int id = BD.CrearPost(post);
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
-        int id = ViewBag.listadoPosts[0].ID;
         if(Archivo1 != null)
         {
             post.Foto1 = "post" + id + "f1.jpg";
@@ -177,6 +176,15 @@ public class HomeController : Controller
         ViewBag.listadoDestinos = BD.ListarDestinos();
         ViewBag.usuario = BD.ObtenerUser();
         ViewBag.listadoPosts = BD.ListarPosts(0,0);
+        return View("Home");
+    }
+
+    public IActionResult PostsLikeados()
+    {
+        ViewBag.usuario = BD.ObtenerUser();
+        ViewBag.destacado = "Home";
+        ViewBag.listadoDestinos = BD.ListarDestinos();
+        ViewBag.listadoPosts = BD.ListarPostsLike(ViewBag.usuario.ID);
         return View("Home");
     }
 

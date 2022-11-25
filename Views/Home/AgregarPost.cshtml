@@ -8,7 +8,7 @@
         <div class="col-sm-6">
             <div class="post">
                 <br>
-                <form method="post" action='@Url.Action("GuardarPost","Home")'> 
+                <form method="post" action='@Url.Action("GuardarPost","Home")' enctype="multipart/form-data"> 
                     <div class="row">
                         <div class = "col-sm-4">
                             <span class ="ingresarFoto"> 
@@ -66,7 +66,7 @@
                                     <label for="radio3"></label>
                                     <input id="radio4" type="radio" name="Estrellas" value="2">
                                     <label for="radio4"></label>
-                                    <input id="radio5" type="radio" name="Estrellas" value="1">
+                                    <input id="radio5" type="radio" name="Estrellas" value="1" required>
                                     <label for="radio5"></label>
                                 </div>
                             </div>

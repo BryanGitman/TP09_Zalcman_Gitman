@@ -7,6 +7,10 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             @{
+                if(ViewBag.listadoPosts.Count == 0)
+                {
+                    <p class="text-center text-muted">No hay publicaciones que coincidan con tu busqueda por el momento.</p>
+                }
                 foreach(Publicacion post in ViewBag.listadoPosts)
                 {
                     <div class="post">
